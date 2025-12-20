@@ -64,3 +64,18 @@ Blockly.Blocks['tests_block4'] = {
         this.hat = 'cap';
     }
 }
+
+Blockly.Blocks['tests_block5'] = {
+    init: function() {
+        this.appendDummyInput().appendField("Block 3");
+        this.appendValueInput('INPUT').appendField('Input');
+        this.appendValueInput('INPUT2').appendField('Input2');
+        this.appendValueInput('INPUT3').setCheck('Boolean').appendField('Input3');
+        this.appendStatementInput('INPUT4');
+        this.setColour(categoryColors.Tests);
+        this.setInputsInline(true);
+        this.setNextStatement(true);
+        this.setPreviousStatement(true);
+
+    }
+}

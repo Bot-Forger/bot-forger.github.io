@@ -28,6 +28,10 @@ export default `
       ${stringShadow('INPUT', 'ok')}
       ${numberShadow('INPUT2', 10)}
     </block>
+    <block type="tests_block5">
+      ${stringShadow('INPUT', 'ok')}
+      ${numberShadow('INPUT2', 10)}
+    </block>
   </category>
 </xml>
 `;
