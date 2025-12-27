@@ -12,7 +12,8 @@ const deserializeInput = (input, blocks) => {
             obj.shadow.type = 'math_number';
             obj.shadow.fields = { NUM: input.shadow[1] };
         } else {
-            throw new Error('Unknown shadow type: ' + input.shadow[0]);
+            obj.shadow.type = input.shadow[0];
+            obj.shadow.fields = input.shadow[1];
         }
     }
 
@@ -34,6 +35,9 @@ const deserializeBlock = (block, id, blocks) => {
         for (const [name, input] of Object.entries(block.inputs)) {
             obj.inputs[name] = deserializeInput(input, blocks);
         }
+    }
+    if (block.fields) {
+        obj.fields = block.fields;
     }
     if (block.comment) {
         obj.icons = { comment: block.comment };

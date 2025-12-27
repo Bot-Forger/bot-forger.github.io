@@ -9,7 +9,7 @@ const serializeInput = (input, blocks) => {
         } else if (input.shadow.type === 'math_number') {
             obj.shadow = ['number', input.shadow.fields.NUM || 0];
         } else {
-            throw new Error('Unknown shadow type: ' + input.shadow.type);
+            obj.shadow = [input.shadow.type, input.shadow.fields];
         }
     }
 
