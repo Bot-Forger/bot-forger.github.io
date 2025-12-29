@@ -9,7 +9,6 @@ class BotStore extends EventEmitter {
         super();
 
         this.bot = {};
-        this.sessionToken = Cookie.get('session') ?? null;
     }
     getBotSettings () {
         return this.bot.meta ?? {};

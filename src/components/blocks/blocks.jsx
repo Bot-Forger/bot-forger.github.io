@@ -24,7 +24,6 @@ import './category-blocks/channels.js';
 
 const BlocklyWorkspace = () => {
     const blocklyDiv = useRef(null);
-    const [saveDirty, setSaveDirty] = useState(false);
 
     useEffect(() => {
         const toolboxDom = Blockly.utils.xml.textToDom(toolboxXML);
@@ -79,6 +78,11 @@ const BlocklyWorkspace = () => {
 
         ThemeStore.on('themeChange', handleThemeChange);
         WorkspaceManager.attachWorkspace(workspace);
+
+        // Remove the wierd border between the workspace and the editor bar
+        setTimeout(() => {
+            document.querySelector('.blocklyMainBackground').style.stroke = 'none';
+        });
 
         return () => {
             WorkspaceManager.detatchWorkspace();

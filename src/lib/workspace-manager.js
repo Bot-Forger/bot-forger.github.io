@@ -3,8 +3,6 @@ import { EventEmitter } from 'events';
 import serialize from './serialize';
 import deserializeToWorkspace from './deserialize';
 
-import notify from './notify';
-
 class WorkspaceManager extends EventEmitter {
     constructor() {
         super();

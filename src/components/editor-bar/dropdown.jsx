@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import Button from './button';
 import DropdownCaret from './dropdown-caret.svg';
 
-function DropdownMenu(props) {
+function DropdownMenu (props) {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -18,8 +18,16 @@ function DropdownMenu(props) {
     }, []);
 
     return (
-        <div ref={dropdownRef} style={{ position: 'relative', display: 'inline-block' }}>
-            <Button onClick={() => setIsOpen(!isOpen)}>
+        <div ref={dropdownRef} className='dropdown-container'>
+            <Button onClick={() => setIsOpen(!isOpen)} style={props.style}>
+                {props.icon && 
+                    <img
+                        src={props.icon}
+                        width={25}
+                        height={25}
+                        className='editor-button-icon'
+                    />
+                }
                 {props.label}
                 <img
                     src={DropdownCaret}
@@ -29,7 +37,10 @@ function DropdownMenu(props) {
                 />
             </Button>
             {isOpen && (
-                <div className='editor-bar-dropdown'>
+                <div
+                    className='editor-bar-dropdown'
+                    mode={props.rtl ? 'left' : 'right'}
+                >
                     {props.children}
                 </div>
             )}
