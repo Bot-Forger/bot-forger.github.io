@@ -7,6 +7,7 @@ import EditorMenuBar from '../components/editor-bar/editor-bar.jsx';
 
 import SecretsModal from '../components/secrets-modal/secrets-modal.jsx';
 import BotModal from '../components/bot-modal/bot-modal.jsx';
+import CommandsModal from '../components/commands-modal/commands-modal.jsx';
 
 export default function Editor () {
     const [modalOpen, setModalOpen] = useState(null);
@@ -32,6 +33,10 @@ export default function Editor () {
             <BlocklyWorkspace />
             <BotModal
                 isOpen={modalOpen === 'botSettings'}
+                onClose={handleModalClose}
+            />
+            <CommandsModal
+                isOpen={modalOpen === 'commands'}
                 onClose={handleModalClose}
             />
             <SecretsModal

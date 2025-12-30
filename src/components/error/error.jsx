@@ -2,7 +2,7 @@ import './error.css';
 
 function Error (props) {
     return (
-        <div>
+        <div style={{ margin: 'auto', width: 400 }}>
             <svg className='error-icon' width="25px" height="25px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
                 <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                     <g id="add" fill="#000000" transform="translate(32.000000, 42.666667)">

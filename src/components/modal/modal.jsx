@@ -14,8 +14,8 @@ function Modal (props) {
                 },
                 content: {
                     zIndex: 80,
-                    width: props.height || 500,
-                    height: props.width || 400,
+                    width: props.width || 500,
+                    height: props.height || 400,
                     margin: 'auto',
                     backgroundColor: 'var(--primary-color)',
                     color: 'var(--secondary-color)',

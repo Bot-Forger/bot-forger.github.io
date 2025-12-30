@@ -54,6 +54,7 @@ export default function EditorMenuBar (props) {
                 </DropdownMenu>
                 <DropdownMenu label="Edit">
                     <Button onClick={() => ThemeStore.toggleTheme()}>Change Theme</Button>
+                    <Button disabled={!AccountStore.hasSession} onClick={() => props.onMenuOpen('commands')}>Commands</Button>
                     <Button disabled={!AccountStore.hasSession} onClick={() => props.onMenuOpen('secrets')}>Secrets</Button>
                     <Button disabled={!AccountStore.hasSession} onClick={() => props.onMenuOpen('botSettings')}>Bot Settings</Button>
                 </DropdownMenu>
