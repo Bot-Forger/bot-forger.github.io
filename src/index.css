@@ -17,3 +17,9 @@ body.theme-dark {
   --secondary-color: #e0e0e0ff;
   --tertiary-color: #232323ff
 }
+
+.editor-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%
+}

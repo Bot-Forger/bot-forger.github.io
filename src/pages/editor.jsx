@@ -27,22 +27,24 @@ export default function Editor () {
     return (
         <QueryClientProvider client={queryClient}>
             <ToastContainer />
-            <EditorMenuBar
-                onMenuOpen={menu => setModalOpen(menu)}
-            />
-            <BlocklyWorkspace />
-            <BotModal
-                isOpen={modalOpen === 'botSettings'}
-                onClose={handleModalClose}
-            />
-            <CommandsModal
-                isOpen={modalOpen === 'commands'}
-                onClose={handleModalClose}
-            />
-            <SecretsModal
-                isOpen={modalOpen === 'secrets'}
-                onClose={handleModalClose}
-            />
+            <div className='editor-container'>
+                <EditorMenuBar
+                    onMenuOpen={menu => setModalOpen(menu)}
+                />
+                <BlocklyWorkspace />
+                <BotModal
+                    isOpen={modalOpen === 'botSettings'}
+                    onClose={handleModalClose}
+                />
+                <CommandsModal
+                    isOpen={modalOpen === 'commands'}
+                    onClose={handleModalClose}
+                />
+                <SecretsModal
+                    isOpen={modalOpen === 'secrets'}
+                    onClose={handleModalClose}
+                />
+            </div>
         </QueryClientProvider>
     )
 }

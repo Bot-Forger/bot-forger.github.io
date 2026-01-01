@@ -96,7 +96,7 @@ const BlocklyWorkspace = () => {
             ref={blocklyDiv}
             style={{
                 width: "100vw",
-                height: "96vh",
+                flex: 1
             }}
         />
     )
