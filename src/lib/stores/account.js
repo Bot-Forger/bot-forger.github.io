@@ -18,7 +18,9 @@ class AccountStore extends EventEmitter {
     }
     addSession (sessionToken) {
         if (this.session.token) return;
-        Cookie.set('session-token', sessionToken);
+        Cookie.set('session-token', sessionToken, {
+            expires: 7
+        });
     }
     async fetchAccountData () {
         if (!this.session.token) return null;
