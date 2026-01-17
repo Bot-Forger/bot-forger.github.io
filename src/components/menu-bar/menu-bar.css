@@ -1,4 +1,4 @@
-.editor-bar {
+.menu-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -6,11 +6,11 @@
     height: 2.5rem
 }
 
-.editor-bar-main, .editor-bar-side {
+.menu-bar-main, .menu-bar-side {
     display: flex;
 }
 
-.editor-bar-dropdown {
+.menu-bar-dropdown {
     position: absolute;
     top: 100%;
     min-width: 160px;
@@ -21,15 +21,15 @@
     filter: brightness(1.1)
 }
 
-.editor-bar-dropdown[mode="right"] {
+.menu-bar-dropdown[mode="right"] {
     left: 0;
 }
 
-.editor-bar-dropdown[mode="left"] {
+.menu-bar-dropdown[mode="left"] {
     right: 0
 }
 
-.editor-bar-dropdown > :last-child {
+.menu-bar-dropdown > :last-child {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }

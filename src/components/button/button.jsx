@@ -1,7 +1,9 @@
+import './button.css';
+
 export default function Button(props) {
     return (
         <div 
-            className='editor-button'
+            className='button'
             onClick={props.onClick}
             disabled={props.disabled}
             style={props.style}

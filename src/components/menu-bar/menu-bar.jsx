@@ -1,15 +1,12 @@
 import { useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
-import Button from './button.jsx';
-import DropdownMenu from './dropdown.jsx';
 import AccountManagement from './account.jsx';
-
-import workspaceManager from '../../lib/workspace-manager.js';
-import ThemeStore from '../../lib/stores/theme.js';
 import AccountStore from '../../lib/stores/account.js';
 
-import './editor-bar.css';
+import Button from '../button/button.jsx';
+
+import './menu-bar.css';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -46,20 +43,11 @@ export default function EditorMenuBar (props) {
     }, []);
 
     return (
-        <div className='editor-bar'>
-            <div className='editor-bar-main'>
-                <DropdownMenu label="File">
-                    <Button onClick={() => workspaceManager.loadWorkspaceFromFile()}>Load from file</Button>
-                    <Button onClick={() => workspaceManager.saveWorkspaceToFile('hi.botf')}>Save as</Button>
-                </DropdownMenu>
-                <DropdownMenu label="Edit">
-                    <Button onClick={() => ThemeStore.toggleTheme()}>Change Theme</Button>
-                    <Button disabled={!AccountStore.hasSession} onClick={() => props.onMenuOpen('commands')}>Commands</Button>
-                    <Button disabled={!AccountStore.hasSession} onClick={() => props.onMenuOpen('secrets')}>Secrets</Button>
-                    <Button disabled={!AccountStore.hasSession} onClick={() => props.onMenuOpen('botSettings')}>Bot Settings</Button>
-                </DropdownMenu>
+        <div className='menu-bar'>
+            <div className='menu-bar-main'>
+                {props.children}
             </div>
-            <div className='editor-bar-side'>
+            <div className='menu-bar-side'>
                 {accountData ?
                     <AccountManagement
                         username={accountData.username}

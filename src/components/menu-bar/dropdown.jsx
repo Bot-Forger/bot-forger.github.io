@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import Button from './button';
+import Button from '../button/button';
 import DropdownCaret from './dropdown-caret.svg';
 
 function DropdownMenu (props) {
@@ -38,7 +38,7 @@ function DropdownMenu (props) {
             </Button>
             {isOpen && (
                 <div
-                    className='editor-bar-dropdown'
+                    className='menu-bar-dropdown'
                     mode={props.rtl ? 'left' : 'right'}
                 >
                     {props.children}

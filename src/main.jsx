@@ -7,6 +7,7 @@ import ThemeStore from './lib/stores/theme.js';
 
 import './index.css';
 
+import Dashboard from './pages/dashboard.jsx';
 import Editor from './pages/editor.jsx'
 
 Modal.setAppElement('#root');
@@ -23,8 +24,9 @@ createRoot(root).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Editor />} />
+        <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/editor/:id?' element={<Editor />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,
-)
+);

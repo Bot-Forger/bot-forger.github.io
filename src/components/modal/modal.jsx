@@ -19,8 +19,7 @@ function Modal (props) {
                     margin: 'auto',
                     backgroundColor: 'var(--primary-color)',
                     color: 'var(--secondary-color)',
-                    // textAlign: 'center',
-                    borderRadius: 5
+                    borderRadius: 5,
                 }
             }}
         >
@@ -30,13 +29,13 @@ function Modal (props) {
                     <p>{props.description}</p>
                 }
                 <hr />
-                <div className='modal-contents'>
+                <div className='modal-contents' style={props.style}>
                     {props.children}
                 </div>
                 <div className='modal-close-options'>
                     {props.onSaveClose ? <>
                         <button onClick={props.onClose} className='modal-close'>Cancel</button>
-                        <button onClick={props.onSaveClose} className='modal-save'>Save</button>
+                        <button onClick={props.onSaveClose} className='modal-save'>{props.saveLabel || 'Save'}</button>
                     </> : 
                         <button onClick={props.onClose} className='modal-close'>Close</button>
                     }

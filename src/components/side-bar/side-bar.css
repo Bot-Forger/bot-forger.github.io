@@ -1,0 +1,19 @@
+.side-bar {
+    height: 100%;
+    overflow: auto;
+    border-right: 3px solid black;
+    background-color: var(--primary-color);
+}
+
+.side-bar > button {
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    padding: 0.7rem;
+    font-size: 1.3rem;
+    background-color: inherit;
+}
+
+.side-bar > button:hover {
+    filter: brightness(1.5)
+}
