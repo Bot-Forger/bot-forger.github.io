@@ -45,6 +45,7 @@ export default function Editor () {
                         <Button disabled={!AccountStore.hasSession} onClick={() => setModalOpen('secrets')}>Secrets</Button>
                         <Button disabled={!AccountStore.hasSession} onClick={() => setModalOpen('botSettings')}>Bot Settings</Button>
                     </DropdownMenu>
+                    <Button onClick={() => window.open('https://scratch.mit.edu/users/lordcat__/#comments', '_blank')}>Feedback</Button>
                 </MenuBar>
                 <BlocklyWorkspace />
                 <BotModal
