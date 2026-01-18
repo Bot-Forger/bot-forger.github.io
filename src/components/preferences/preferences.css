@@ -15,7 +15,7 @@
 }
 
 .preferences > h1, .preference-option > label {
-    color: var(--secondary-color);
+    color: var(--color-5);
 }
 
 .preference-option {

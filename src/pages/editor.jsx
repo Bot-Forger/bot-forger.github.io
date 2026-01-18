@@ -43,7 +43,7 @@ export default function Editor () {
                         <Button onClick={() => ThemeStore.toggleTheme()}>Change Theme</Button>
                         <Button disabled={!AccountStore.hasSession} onClick={() => setModalOpen('commands')}>Commands</Button>
                         <Button disabled={!AccountStore.hasSession} onClick={() => setModalOpen('secrets')}>Secrets</Button>
-                        <Button disabled={!AccountStore.hasSession} onClick={() => setModalpen('botSettings')}>Bot Settings</Button>
+                        <Button disabled={!AccountStore.hasSession} onClick={() => setModalOpen('botSettings')}>Bot Settings</Button>
                     </DropdownMenu>
                 </MenuBar>
                 <BlocklyWorkspace />

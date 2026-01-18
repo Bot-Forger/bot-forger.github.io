@@ -25,7 +25,7 @@ function DropdownMenu (props) {
                         src={props.icon}
                         width={25}
                         height={25}
-                        className='editor-button-icon'
+                        className='button-icon'
                     />
                 }
                 {props.label}

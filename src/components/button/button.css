@@ -13,11 +13,7 @@
 }
 
 .button:not([disabled]):hover {
-    background-color: color-mix(
-        in srgb,
-        var(--tertiary-color) 90%,
-        black
-    )
+    filter: brightness(0.80)
 }
 
 .button-icon {

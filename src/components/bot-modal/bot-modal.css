@@ -4,14 +4,6 @@
     margin-bottom: 10px
 }
 
-body.theme-dark .bot-setting {
-    background-color: var(--tertiary-color);
-}
-
-body.theme-light .bot-setting {
-    background-color: #d2d2d2
-}
-
 .bot-setting > span {
     width: 30%
 }
@@ -19,9 +11,9 @@ body.theme-light .bot-setting {
 .bot-setting > input {
     margin-left: 10px;
     width: 60%;
-    border: none;
     border-radius: 5px;
-    padding: 5px
+    padding: 0.25rem;
+    border: 0.1rem solid var(--color-4);
 }
 
 body.theme-dark .bot-setting > input {

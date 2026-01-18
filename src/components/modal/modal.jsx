@@ -10,16 +10,17 @@ function Modal (props) {
             style={{
                 overlay: {
                     zIndex: 80,
-                    backgroundColor: 'color-mix(in srgb, var(--tertiary-color) 75%, transparent)'
+                    backgroundColor: 'color-mix(in srgb, var(--color-3) 50%, transparent)'
                 },
                 content: {
                     zIndex: 80,
                     width: props.width || 500,
                     height: props.height || 400,
                     margin: 'auto',
-                    backgroundColor: 'var(--primary-color)',
-                    color: 'var(--secondary-color)',
+                    backgroundColor: 'var(--color-1)',
+                    color: 'var(--color-4)',
                     borderRadius: 5,
+                    opacity: 1
                 }
             }}
         >
@@ -42,7 +43,7 @@ function Modal (props) {
                 </div>
             </div>
         </ReactModal>
-    )
+    );
 }
 
 export default Modal;

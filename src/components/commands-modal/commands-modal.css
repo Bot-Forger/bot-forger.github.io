@@ -11,20 +11,26 @@
     display: inline;
     margin-left: 10px;
     margin: 7px;
-    border: none;
     border-radius: 5px;
-    padding: 5px
+    padding: 5px;
+    border: 0.1rem solid var(--color-4);
 }
 
 .commands-item button, .commands-add {
     cursor: pointer;
+    background-color: var(--color-5);
+    color: var(--color-1);
     border: none;
     padding: 5px;
     border-radius: 5px
 }
 
+.commands-item button:hover, .commands-add:hover {
+    background-color: var(--color-4);
+}
+
 body.theme-dark .commands-item input,  body.theme-dark .commands-item select {
-    background-color: var(--tertiary-color);
+    background-color: var(--color-3);
     color: white;
 }
 
@@ -34,7 +40,7 @@ body.theme-dark .commands-item input,  body.theme-dark .commands-item select {
     padding-left: 20px;
     border-left: 2px dashed color-mix(
         in srgb,
-        var(--secondary-color) 50%,
+        var(--color-5) 50%,
         transparent
     );
 }

@@ -1,12 +1,12 @@
-.error-message {
+.page-error > p {
     display: inline
 }
 
-.error-icon {
+.page-error > svg {
     vertical-align: middle;
-    margin: 10px;
+    margin: 0.5rem;
 }
 
-body.theme-dark .error-icon > g > g {
+body.theme-dark .page-error > svg > g > g {
     fill: yellow
 }
