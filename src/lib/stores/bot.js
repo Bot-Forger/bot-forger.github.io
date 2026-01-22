@@ -2,6 +2,8 @@ import { EventEmitter } from 'events';
 import notify from '../notify';
 
 import AccountStore from './account';
+import workspaceManager from '../workspace-manager';
+import fileManager from '../file-manager';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -11,9 +13,16 @@ class BotStore extends EventEmitter {
 
         this.bot = {};
         this.botLoaded = false;
+        this.loadedFromId = false;
+    }
+    clear () {
+        this.bot = {};
+        this.botLoaded = false;
+        this.loadedFromId = false;
     }
     async loadFromID (id) {
         if (!id || !AccountStore.hasSession) return null;
+        console.log('ok')
         const response = await fetch(`${BACKEND_URL}/applications/${id}`, {
             headers: { 'x-session-token': AccountStore.session.token }
         });
@@ -25,8 +34,49 @@ class BotStore extends EventEmitter {
         
         this.bot.commands = JSON.parse(this.bot.commands);
         this.bot.blocks = JSON.parse(this.bot.blocks);
+        this.loadedFromId = true;
 
         return null;
+    }
+    async loadFromFile () {
+        const file = await fileManager.loadFile('*.botf');
+        try {
+            const json = JSON.parse(await file.text());
+            this.bot = json;
+            await workspaceManager.loadWorkspaceFromJSON(json);
+            this.botLoaded = true;
+        } catch (e) {
+            this.clear();
+            alert(`Failed to load file: ${e.message}`);
+        }
+    }
+    async saveAs () {
+        const serializedWorkspace = workspaceManager.saveWorkspaceToJSON();
+        this.bot.blocks = serializedWorkspace.blocks;
+        await fileManager.saveFileAs('MyBot.botf', JSON.stringify(this.bot));
+        this.botLoaded = true;
+        workspaceManager.saveDirty = false;
+    }
+    async save () {
+        if (!this.botLoaded) return;
+        const serializedWorkspace = workspaceManager.saveWorkspaceToJSON();
+        this.bot.blocks = serializedWorkspace.blocks;
+        if (this.loadedFromId) {
+            const response = await fetch(`${BACKEND_URL}/applications/${this.bot.id}`, {
+                method: 'PATCH',
+                body: JSON.stringify(serializedWorkspace),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-session-token': AccountStore.session.token
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Failed to update blocks');
+            }
+        } else {
+            fileManager.saveFile(this.bot.name + '.botf', JSON.stringify(this.bot));
+        }
+        workspaceManager.saveDirty = false;
     }
     getCommands () {
         return this.bot.commands ?? [];
@@ -111,5 +161,6 @@ class BotStore extends EventEmitter {
         }
     }
 }
-
-export default new BotStore;
+const b = new BotStore;
+window.BotStore = b;
+export default b;

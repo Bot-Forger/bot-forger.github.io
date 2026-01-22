@@ -1,8 +1,11 @@
 import './loader.css';
 
-function Loader () {
+function Loader (props) {
     return (
-        <span className="loader" />
+        <span
+            style={props.style}
+            className="loader"
+        />
     )
 }
 

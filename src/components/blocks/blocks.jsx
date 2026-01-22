@@ -22,7 +22,7 @@ import './category-blocks/invites.js';
 import './category-blocks/webhooks.js';
 import './category-blocks/channels.js';
 
-const BlocklyWorkspace = () => {
+function Blocks (props) {
     const blocklyDiv = useRef(null);
 
     useEffect(() => {
@@ -102,4 +102,4 @@ const BlocklyWorkspace = () => {
     )
 };
 
-export default BlocklyWorkspace;
+export default Blocks;

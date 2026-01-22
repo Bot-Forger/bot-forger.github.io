@@ -8,17 +8,27 @@
 
 .menu-bar-main, .menu-bar-side {
     display: flex;
+    align-items: center;
+    height: 100%;
 }
 
 .menu-bar-dropdown {
     position: absolute;
-    top: 100%;
+    top: calc(100% + 0.6rem);
     min-width: 160px;
     z-index: 75;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     background-color: var(--color-7);
     filter: brightness(1.1)
+}
+
+.menu-bar-side .menu-bar-dropdown {
+    top: calc(100% + 0.4rem)
+}
+
+.menu-bar-dropdown > .button {
+    padding: 0.6rem
 }
 
 .menu-bar-dropdown[mode="right"] {
@@ -36,11 +46,16 @@
 
 .dropdown-container {
     position: relative;
-    display: inline-block
+    display: inline-block;
+    white-space: nowrap;
 }
 
 .button-icon {
     vertical-align: middle;
     margin-right: 5px;
     border-radius: 0.2rem;
+}
+
+.button#save > .save-text {
+    margin-left: 0.5rem;
 }

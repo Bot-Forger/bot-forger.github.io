@@ -7,7 +7,9 @@ function AccountManagement (props) {
             label={props.username}
             icon={props.avatarURL}
             rtl={true}
-            style={{ padding: 5 }}
+            style={{
+                top: 'calc(100% + 0.3rem)'
+            }}
         >
             <Button onClick={() => location.href = '/dashboard'}>Dashboard</Button>
             <Button onClick={props.onSignOut}>Sign out</Button>

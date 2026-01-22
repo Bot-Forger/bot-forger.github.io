@@ -13,3 +13,7 @@
     opacity: 0.1;
     border-width: 2px
 }
+
+.blocklyHtmlInput {
+  color-scheme: light;
+}

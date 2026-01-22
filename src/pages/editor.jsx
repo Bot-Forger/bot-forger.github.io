@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router';
 
-import BlocklyWorkspace from '../components/blocks/blocks.jsx';
+import Blocks from '../components/blocks/blocks.jsx';
 import MenuBar from '../components/menu-bar/menu-bar.jsx';
 import Button from '../components/button/button.jsx';
 import Loader from '../components/loader/loader.jsx';
@@ -19,6 +19,7 @@ import ControlPanel from '../components/control-panel/control-panel.jsx';
 
 export default function Editor () {
     const [modalOpen, setModalOpen] = useState(null);
+    const [workspaceAttached, setWorkspaceAttached] = useState(false);
     const handleModalClose = () => setModalOpen(null);
     const { id } = useParams();
 
@@ -27,21 +28,33 @@ export default function Editor () {
         queryFn: () => BotStore.loadFromID(id)
     });
 
-    if (isPending) {
-        return <Loader />;
-    }
+    useEffect(() => {
+        const handleWorkspaceAttached = () => setWorkspaceAttached(true);
+        workspaceManager.on('attached', handleWorkspaceAttached);
+        return () => workspaceManager.off('attached', handleWorkspaceAttached);
+    }, []);
+
+    useEffect(() => {
+        if (workspaceAttached && !isPending && BotStore.botLoaded && workspaceManager.workspace) {
+            workspaceManager.loadWorkspaceFromJSON({ blocks: BotStore.bot.blocks });
+        }
+    }, [workspaceAttached, isPending]);
 
     if (error && !isPending) {
         console.error(error);
         history.replaceState(null, "", "/editor");
     }
 
+    if (isPending) {
+        return <Loader />;
+    }
+
     return (
         <div className='page-wrapper'>
             <MenuBar>
                 <DropdownMenu label="File">
-                    <Button onClick={() => workspaceManager.loadWorkspaceFromFile()}>Load from file</Button>
-                    <Button onClick={() => workspaceManager.saveWorkspaceToFile('hi.botf')}>Save as</Button>
+                    <Button onClick={() => BotStore.loadFromFile()}>Load from file</Button>
+                    <Button onClick={() => BotStore.saveAs()}>Save as</Button>
                 </DropdownMenu>
                 <DropdownMenu label="Edit">
                     <Button onClick={() => ThemeStore.toggleTheme()}>Change Theme</Button>
@@ -49,12 +62,12 @@ export default function Editor () {
                     <Button disabled={!BotStore.botLoaded} onClick={() => setModalOpen('secrets')}>Secrets</Button>
                     <Button disabled={!BotStore.botLoaded} onClick={() => setModalOpen('botSettings')}>Bot Settings</Button>
                 </DropdownMenu>
-                {BotStore.botLoaded &&
+                {BotStore.botLoaded && BotStore.loadedFromId &&
                     <Button onClick={() => setModalOpen('controlPanel')}>Control Panel</Button>
                 }
                 <Button onClick={() => window.open('https://scratch.mit.edu/users/lordcat__/#comments', '_blank')}>Feedback</Button>
             </MenuBar>
-            <BlocklyWorkspace />
+            <Blocks />
             <BotModal
                 isOpen={modalOpen === 'botSettings'}
                 onClose={handleModalClose}

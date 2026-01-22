@@ -2,7 +2,9 @@ import { useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import AccountManagement from './account.jsx';
+import SaveButton from './save.jsx';
 import AccountStore from '../../lib/stores/account.js';
+import BotStore from '../../lib/stores/bot.js';
 
 import Button from '../button/button.jsx';
 
@@ -48,6 +50,9 @@ export default function EditorMenuBar (props) {
                 {props.children}
             </div>
             <div className='menu-bar-side'>
+                {location.pathname.startsWith('/editor') &&
+                    <SaveButton />
+                }
                 {accountData ?
                     <AccountManagement
                         username={accountData.username}
@@ -59,5 +64,5 @@ export default function EditorMenuBar (props) {
                 }
             </div>
         </div>
-    )
+    );
 }
