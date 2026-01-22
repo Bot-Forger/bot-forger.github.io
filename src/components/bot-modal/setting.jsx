@@ -12,7 +12,7 @@ function Setting (props) {
                 <p>{props.desc}</p>
             }
         </div>
-    )
+    );
 }
 
 export default Setting;

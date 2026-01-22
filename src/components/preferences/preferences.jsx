@@ -17,19 +17,6 @@ function DropdownSetting (props) {
     );
 }
 
-function ValueSetting (props) {
-    return (
-        <div className='preference-option'>
-            <label>{props.label}</label>
-            <input
-                value={props.value}
-                onChange={props.onChange}
-                type={props.type || 'text'}
-            />
-        </div>
-    );
-}
-
 function Preferences () {
     const [theme, setTheme] = useState(ThemeStore.getTheme());
 

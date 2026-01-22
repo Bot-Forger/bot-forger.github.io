@@ -79,7 +79,7 @@ function SecretsModal (props) {
                 </>)
             }
         </Modal>
-    )
+    );
 }
 
 export default SecretsModal;

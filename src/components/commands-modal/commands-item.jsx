@@ -78,7 +78,7 @@ function CommandsItem (props) {
             >Delete command</button>
 
         </div>
-    )
+    );
 }
 
 export default CommandsItem;

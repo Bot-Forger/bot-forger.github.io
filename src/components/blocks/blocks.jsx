@@ -22,7 +22,7 @@ import './category-blocks/invites.js';
 import './category-blocks/webhooks.js';
 import './category-blocks/channels.js';
 
-function Blocks (props) {
+function Blocks () {
     const blocklyDiv = useRef(null);
 
     useEffect(() => {
@@ -99,7 +99,7 @@ function Blocks (props) {
                 flex: 1
             }}
         />
-    )
+    );
 };
 
 export default Blocks;

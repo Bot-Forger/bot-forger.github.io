@@ -25,28 +25,6 @@ const categoryColors = {
 
 export default `
 <xml xmlns="https://developers.google.com/blockly/xml">
-  <category name="Tests" colour="${categoryColors.Tests}">>
-    <block type="tests_block1">
-      ${stringShadow('INPUT', 'Hello')}
-      ${numberShadow('INPUT2', 10)}
-    </block>
-    <block type="tests_block2">
-      ${stringShadow('INPUT', 'ok')}
-      ${numberShadow('INPUT2', 10)}
-    </block>
-    <block type="tests_block3">
-      ${stringShadow('INPUT', 'ok')}
-      ${numberShadow('INPUT2', 10)}
-    </block>
-    <block type="tests_block4">
-      ${stringShadow('INPUT', 'ok')}
-      ${numberShadow('INPUT2', 10)}
-    </block>
-    <block type="tests_block5">
-      ${stringShadow('INPUT', 'ok')}
-      ${numberShadow('INPUT2', 10)}
-    </block>
-  </category>
   <category name="Text" colour="${categoryColors.Text}">
     <block type="text_asText"></block>
     <block type="text_join">

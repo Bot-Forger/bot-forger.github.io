@@ -14,6 +14,6 @@ function AccountManagement (props) {
             <Button onClick={() => location.href = '/dashboard'}>Dashboard</Button>
             <Button onClick={props.onSignOut}>Sign out</Button>
         </DropdownMenu>
-    )
+    );
 }
 export default AccountManagement;

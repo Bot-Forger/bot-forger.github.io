@@ -44,7 +44,7 @@ function OptionsItem (props) {
             </p>
             <button onClick={props.onDelete}>delete option</button>
         </div>
-    )
+    );
 }
 
 export default OptionsItem;

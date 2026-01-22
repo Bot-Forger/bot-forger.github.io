@@ -23,7 +23,7 @@ function SecretsItem (props) {
                 placeholder="Enter a value..."
             />
         </div>
-    )
+    );
 }
 
 export default SecretsItem;

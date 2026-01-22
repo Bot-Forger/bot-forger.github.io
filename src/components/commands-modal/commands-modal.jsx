@@ -73,7 +73,7 @@ function CommandsModal (props) {
                 Add command
             </button>
         </Modal>
-    )
+    );
 }
 
 export default CommandsModal;

@@ -38,6 +38,7 @@ function DashboardBots (props) {
                             key={i}
                             id={bot.id}
                             name={bot.name}
+                            description={bot.description}
                             lastUpdated={new Date(bot.last_updated)}
                             onDelete={handleDelete}
                         />

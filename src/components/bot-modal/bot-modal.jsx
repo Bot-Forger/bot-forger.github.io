@@ -56,7 +56,7 @@ function BotModal (props) {
                 onChange={v => handleSettingChange('app_id', v.target.value)}
             />
         </Modal>
-    )
+    );
 }
 
 export default BotModal;
