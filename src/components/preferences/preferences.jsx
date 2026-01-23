@@ -28,6 +28,7 @@ function Preferences () {
     return (
         <div className='preferences'>
             <h1>Preferences</h1>
+            <hr />
             
             <DropdownSetting label='Theme' value={theme} onChange={handleSetTheme}>
                 <option value='light'>Light</option>

@@ -1,17 +1,23 @@
 .preferences {
-    width: 20rem;
-    margin: 0 auto 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex: 1;
+    margin: 1rem;
 }
 
 .preferences > h1 {
-    text-align: center;
+    margin: 0.5rem 0 0.5rem 0;
+}
+
+.preferences > hr {
+    width: 100%;
 }
 
 .preference-option > label {
     margin-right: 0.5rem;
+    font-size: 1.25rem;
+}
+
+.preference-option > input, .preference-option > select {
+    font-size: 1.10rem;
 }
 
 .preferences > h1, .preference-option > label {

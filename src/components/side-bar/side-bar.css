@@ -13,7 +13,7 @@
     border: none;
     cursor: pointer;
     width: 100%;
-    padding: 0.7rem;
+    padding: 0.6rem 0 0.6rem 0;
     font-size: 1.3rem;
     background-color: inherit;
     transition: filter 100ms ease-out;
