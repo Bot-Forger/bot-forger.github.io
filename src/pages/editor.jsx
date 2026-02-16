@@ -36,7 +36,7 @@ export default function Editor () {
 
     useEffect(() => {
         if (workspaceAttached && !isPending && BotStore.botLoaded && workspaceManager.workspace) {
-            workspaceManager.loadWorkspaceFromJSON({ blocks: BotStore.bot.blocks });
+            workspaceManager.loadWorkspaceFromJSON(BotStore.bot.data);
         }
     }, [workspaceAttached, isPending]);
 

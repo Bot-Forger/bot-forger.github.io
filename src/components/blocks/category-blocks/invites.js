@@ -12,16 +12,6 @@ Blockly.Blocks['invites_all'] = {
     }
 }
 
-Blockly.Blocks['invites_allChannel'] = {
-    init: function () {
-        this.appendDummyInput().appendField('all invites for channel');
-        this.appendValueInput('CHANNEL').setCheck('Channel');
-        this.setInputsInline(true);
-        this.setOutput(true, 'List');
-        this.setColour(categoryColor);
-    }
-}
-
 Blockly.Blocks['invites_getAttribute'] = {
     init: function () {
         this.appendDummyInput()
@@ -29,7 +19,8 @@ Blockly.Blocks['invites_getAttribute'] = {
             .appendField(new Blockly.FieldDropdown([
                 ['url', 'URL'],
                 ['channel', 'CHANNEL'],
-                ['author', 'AUTHOR']
+                ['author', 'AUTHOR'],
+                ['max uses', 'USES']
             ]), 'ATTR')
             .appendField('of invite');
         this.appendValueInput('INVITE').setCheck('Invite');
@@ -72,6 +63,22 @@ Blockly.Blocks['invites_delete'] = {
         this.setPreviousStatement(true);
         this.setNextStatement(true);
         this.setColour(categoryColor);
+        this.setInputsInline(true);
+    }
+}
+
+Blockly.Blocks['invites_toggle'] = {
+    init: function () {
+        this.setColour(categoryColor);
+        this.appendValueInput('SERVER')
+            .setCheck('Server')
+            .appendField(new Blockly.FieldDropdown([
+                ['enable', 'ENABLE'],
+                ['disable', 'DISABLE']
+            ]), 'TOGGLE')
+            .appendField('invites in server');
+        this.setPreviousStatement(true);
+        this.setNextStatement(true);
         this.setInputsInline(true);
     }
 }

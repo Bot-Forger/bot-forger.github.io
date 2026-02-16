@@ -47,18 +47,6 @@ Blockly.Blocks['stickers_getAttribute'] = {
     }
 }
 
-Blockly.Blocks['stickers_isAnimated'] = {
-    init: function() {
-        this.appendValueInput('STICKER')
-            .setCheck('Sticker')
-            .appendField('is sticker');
-        this.appendDummyInput().appendField('animated?');
-        this.setInputsInline(true);
-        this.setOutput(true, 'Boolean');
-        this.setColour(categoryColor);
-    }
-}
-
 Blockly.Blocks['stickers_create'] = {
     init: function() {
         this.appendValueInput('SERVER')
@@ -66,14 +54,47 @@ Blockly.Blocks['stickers_create'] = {
             .appendField('create sticker in server');
         this.appendValueInput('NAME')
             .setCheck('String')
-            .appendField('with name');
+            .appendField('name:');
         this.appendValueInput('URL')
             .setCheck('String')
-            .appendField('and image/gif URL');
+            .appendField('image/gif URL:');
+        this.appendDummyInput()
+            .appendField('output sticker:')
+            .appendField(new Blockly.FieldCheckbox('FALSE', v => {this.returns_ = v; this.updateShape_();}), 'RETURNS');
         this.setPreviousStatement(true);
         this.setNextStatement(true);
         this.setColour(categoryColor);
-        this.setInputsInline(true);
+        this.setInputsInline(false);
+    },
+    mutationToDom: function () {
+        const container = document.createElement('mutation');
+        container.setAttribute('returns', this.returns_);
+        return container;
+    },
+    domToMutation: function (xmlElement) {
+        this.returns_ = xmlElement.getAttribute('returns') || 'FALSE';
+        this.updateShape_();
+        this.getField('RETURNS')?.setValue(this.returns_);
+    },
+    updateShape_: function () {
+        if (this.returns_ === 'TRUE') {
+            if (this.previousConnection && this.previousConnection.isConnected()) {
+                this.previousConnection.disconnect();
+            }
+            if (this.nextConnection && this.nextConnection.isConnected()) {
+                this.nextConnection.disconnect();
+            }
+            this.setPreviousStatement(false);
+            this.setNextStatement(false);
+            this.setOutput(true, 'Sticker');
+        } else {
+            if (this.outputConnection && this.outputConnection.isConnected()) {
+                this.outputConnection.disconnect();
+            }
+            this.setOutput(false);
+            this.setPreviousStatement(true);
+            this.setNextStatement(true);
+        }
     }
 }
 

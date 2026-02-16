@@ -24,7 +24,7 @@ Blockly.Blocks['channels_find'] = {
             .appendField(new Blockly.FieldDropdown([
                 ['name', 'NAME'],
                 ['id', 'ID']
-            ]))
+            ]), 'TYPE')
         this.setInputsInline(true);
         this.setOutput(true, 'Channel');
         this.setColour(categoryColor);
@@ -51,6 +51,17 @@ Blockly.Blocks['channels_getAttribute'] = {
     }
 }
 
+Blockly.Blocks['channels_canSend'] = {
+    init: function () {
+        this.appendValueInput('CHANNEL')
+            .setCheck('Channel')
+            .appendField('can send in channel');
+        this.setOutput(true, 'Boolean');
+        this.setInputsInline(true);
+        this.setColour(categoryColor);
+    }
+}
+
 Blockly.Blocks['channels_create'] = {
     init: function () {
         this.appendValueInput('SERVER')
@@ -58,7 +69,7 @@ Blockly.Blocks['channels_create'] = {
             .appendField('create channel in server');
         this.appendValueInput('CATEGORY')
             .setCheck('String')
-            .appendField('with category');
+            .appendField('in category ID');
         this.appendValueInput('NAME')
             .setCheck('String')
             .appendField('and name');
@@ -69,24 +80,58 @@ Blockly.Blocks['channels_create'] = {
                 ['voice', 'VOICE'],
                 ['announcements', 'ANNOUNCEMENTS'],
                 ['forum', 'FORUM'],
-                ['stage', 'STAGE']
-            ]));
+                ['stage', 'STAGE'],
+                ['category', 'CATEGORY']
+            ]), 'TYPE');
+        this.appendDummyInput()
+            .appendField('output channel:')
+            .appendField(new Blockly.FieldCheckbox('FALSE', v => {this.returns_ = v; this.updateShape_();}), 'RETURNS');
+
         this.setPreviousStatement(true);
         this.setNextStatement(true);
-        this.setOutput('Channel');
         this.setColour(categoryColor);
         this.setInputsInline(false);
+    },
+    mutationToDom: function () {
+        const container = document.createElement('mutation');
+        container.setAttribute('returns', this.returns_);
+        return container;
+    },
+    domToMutation: function (xmlElement) {
+        this.returns_ = xmlElement.getAttribute('returns') || 'FALSE';
+        this.updateShape_();
+        this.getField('RETURNS')?.setValue(this.returns_);
+    },
+    updateShape_: function () {
+        if (this.returns_ === 'TRUE') {
+            if (this.previousConnection && this.previousConnection.isConnected()) {
+                this.previousConnection.disconnect();
+            }
+            if (this.nextConnection && this.nextConnection.isConnected()) {
+                this.nextConnection.disconnect();
+            }
+            this.setPreviousStatement(false);
+            this.setNextStatement(false);
+            this.setOutput(true, 'Channel');
+        } else {
+            if (this.outputConnection && this.outputConnection.isConnected()) {
+                this.outputConnection.disconnect();
+            }
+            this.setOutput(false);
+            this.setPreviousStatement(true);
+            this.setNextStatement(true);
+        }
     }
 }
 
 Blockly.Blocks['channels_move'] = {
     init: function () {
-        this.appendValueInput('SERVER')
-            .setCheck('Server')
+        this.appendValueInput('CHANNEL')
+            .setCheck('Channel')
             .appendField('move channel');
         this.appendValueInput('CATEGORY')
             .setCheck('String')
-            .appendField('to category');
+            .appendField('to category ID');
         this.setPreviousStatement(true);
         this.setNextStatement(true);
         this.setColour(categoryColor);
@@ -170,7 +215,7 @@ Blockly.Blocks['channels_type'] = {
     init: function () {
         this.appendValueInput('CHANNEL')
             .setCheck('Channel')
-            .appendField('type in channel');
+            .appendField('start typing in channel');
         this.appendValueInput('SECONDS')
             .setCheck('Number')
             .appendField('for');

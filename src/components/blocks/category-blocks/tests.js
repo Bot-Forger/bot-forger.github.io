@@ -2,15 +2,6 @@ import * as Blockly from 'blockly';
 
 const categoryColor = "#14e3a2";
 
-Blockly.Blocks['string_shadow'] = {
-    init: function() {
-        this.appendDummyInput()
-          .appendField(new Blockly.FieldTextInput(""), "TEXT");
-        this.setOutput(true, "String");
-        this.setColour(160);
-    }
-}
-
 Blockly.Blocks['tests_block1'] = {
     init: function() {
         this.appendDummyInput().appendField("Block 1");

@@ -16,27 +16,98 @@ Blockly.Blocks['text_asText'] = {
 
 Blockly.Blocks['text_join'] = {
     init: function () {
-        this.appendValueInput('INPUT1')
-            .appendField('join')
-            .setCheck(null);
-        this.appendValueInput('INPUT2')
-            .setCheck(null);
         this.setColour(categoryColor);
-        this.setOutput(true, 'String');
         this.setInputsInline(true);
+        this.setOutput(true, 'String');
+
+        this.itemCount_ = 2;
+        this.messageList = ["apple", "banana", "pear", "orange", "mango", "strawberry", "pineapple", "grape", "kiwi", "watermelon"];
+        this.updateShape_();
+
+    },
+
+    mutationToDom: function() {
+        const container = document.createElement('mutation');
+        container.setAttribute('items', this.itemCount_);
+        return container;
+    },
+
+    domToMutation: function(xmlElement) {
+        this.itemCount_ = parseInt(xmlElement.getAttribute('items'), 10);
+        this.updateShape_();
+    },
+
+    updateShape_: function () {
+        if (!this.getInput('LABEL')) {
+            this.appendDummyInput('LABEL')
+                .appendField('join');
+        }
+
+        if (this.getInput('DECREASE')) {
+            this.removeInput('DECREASE');
+        }
+
+        if (this.getInput('INCREASE')) {
+            this.removeInput('INCREASE');
+        }
+
+        for (let i = 0; i < this.itemCount_; i++) {
+            if (!this.getInput('ADD' + i)) {
+                const shadow = document.createElement('shadow');
+                shadow.setAttribute('type', 'string_shadow');
+
+                const field = document.createElement('field');
+                field.setAttribute('name', 'TEXT');
+                field.textContent = this.messageList[i] || '..';
+                shadow.append(field);
+
+                this.appendValueInput('ADD' + i).connection.setShadowDom(shadow);
+            }
+        }
+        for (let i = this.itemCount_; this.getInput('ADD' + i); i++) {
+            this.removeInput('ADD' + i);
+        }
+
+        this.appendDummyInput('DECREASE')
+            .appendField(new Blockly.FieldImage(
+                '/icons/editor/caret-left.svg',
+                16, 16, 'add join',
+                this.decrease_.bind(this)
+            ));
+
+        this.appendDummyInput('INCREASE')
+            .appendField(new Blockly.FieldImage(
+                '/icons/editor/caret-right.svg',
+                16, 16, 'remove join',
+                this.increase_.bind(this)
+            ));
+    },
+
+    increase_: function () {
+        if (this.itemCount_ > 19) return;
+        this.itemCount_++;
+        this.updateShape_();
+    },
+
+    decrease_: function () {
+        if (this.itemCount_ < 3) return;
+        this.itemCount_--;
+        this.updateShape_();
     }
-};
+}
+
 
 Blockly.Blocks['text_toCase'] = {
     init: function () {
-        this.appendValueInput('INPUT')
+        this.appendValueInput('TEXT')
             .setCheck("String");
         this.appendDummyInput()
             .appendField('to')
             .appendField(new Blockly.FieldDropdown([
-                ['lower', 'lower'],
-                ['UPPER', 'upper'],
-            ]), 'CASE').appendField('case');
+                ['lower', 'LOWER'],
+                ['UPPER', 'UPPER'],
+            ]), 'CASE')
+            .appendField('case');
         this.setColour(categoryColor);
         this.setOutput(true, 'String');
     }
@@ -44,7 +115,7 @@ Blockly.Blocks['text_toCase'] = {
 
 Blockly.Blocks['text_length'] = {
     init: function () {
-        this.appendValueInput('INPUT')
+        this.appendValueInput('TEXT')
             .setCheck('String')
             .appendField('length of');
         this.setColour(categoryColor);
@@ -54,7 +125,7 @@ Blockly.Blocks['text_length'] = {
 
 Blockly.Blocks['text_contains'] = {
     init: function () {
-        this.appendValueInput('INPUT')
+        this.appendValueInput('TEXT')
             .setCheck('String')
             .appendField('does text');
         this.appendValueInput('SUB')
@@ -70,14 +141,14 @@ Blockly.Blocks['text_contains'] = {
 
 Blockly.Blocks['text_startsEnds'] = {
     init: function () {
-        this.appendValueInput('INPUT')
+        this.appendValueInput('TEXT')
             .setCheck('String')
             .appendField('does text');
         this.appendValueInput('SUB')
             .setCheck('String')
             .appendField(new Blockly.FieldDropdown([
-                ['start', 'starts'],
-                ['end', 'ends']
+                ['start', 'STARTS'],
+                ['end', 'ENDS']
             ]), 'MODE')
             .appendField("with");
         this.appendDummyInput()
@@ -96,7 +167,7 @@ Blockly.Blocks['text_lettersFrom'] = {
         this.appendValueInput('END')
             .setCheck('Number')
             .appendField('to #');
-        this.appendValueInput('input')
+        this.appendValueInput('TEXT')
             .setCheck('String')
             .appendField('of text');
         this.setColour(categoryColor);
@@ -113,7 +184,7 @@ Blockly.Blocks['text_replace'] = {
         this.appendValueInput('TO')
             .setCheck('String')
             .appendField('with');
-        this.appendValueInput('INPUT')
+        this.appendValueInput('TEXT')
             .setCheck('String')
             .appendField('in text');
         this.setColour(categoryColor);
@@ -127,7 +198,7 @@ Blockly.Blocks['text_charAt'] = {
         this.appendValueInput('INDEX')
             .setCheck('Number')
             .appendField('letter #');
-        this.appendValueInput('INPUT')
+        this.appendValueInput('TEXT')
             .setCheck('String')
             .appendField('in text');
         this.setColour(categoryColor);
@@ -141,7 +212,7 @@ Blockly.Blocks['text_indexOf'] = {
         this.appendValueInput('SUB')
             .setCheck('String')
             .appendField('index of');
-        this.appendValueInput('INPUT')
+        this.appendValueInput('TEXT')
             .setCheck('String')
             .appendField('in text');
         this.setColour(categoryColor);
@@ -150,16 +221,12 @@ Blockly.Blocks['text_indexOf'] = {
     }
 };
 
-Blockly.Blocks['text_logConsole'] = {
+
+Blockly.Blocks['text_newLine'] = {
     init: function () {
-        this.appendValueInput('INPUT')
-            .appendField('log')
-            .setCheck(null);
-        this.appendDummyInput()
-            .appendField('to console');
         this.setColour(categoryColor);
-        this.setTooltip('Logs the input as text on the console.');
-        this.setPreviousStatement(true);
-        this.setNextStatement(true);
+        this.appendDummyInput()
+            .appendField('new line');
+        this.setOutput(true, 'String');
     }
-};
+}

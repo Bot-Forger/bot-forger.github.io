@@ -33,7 +33,7 @@ class BotStore extends EventEmitter {
         this.botLoaded = true;
         
         this.bot.commands = JSON.parse(this.bot.commands);
-        this.bot.blocks = JSON.parse(this.bot.blocks);
+        this.bot.data = JSON.parse(this.bot.data);
         this.loadedFromId = true;
 
         return null;
@@ -52,26 +52,26 @@ class BotStore extends EventEmitter {
     }
     async saveAs () {
         const serializedWorkspace = workspaceManager.saveWorkspaceToJSON();
-        this.bot.blocks = serializedWorkspace.blocks;
-        await fileManager.saveFileAs('MyBot.botf', JSON.stringify(this.bot));
+        this.bot.data = serializedWorkspace;
+        await fileManager.saveFileAs('MyBot.botf', JSON.stringify(this.bot.data));
         this.botLoaded = true;
         workspaceManager.saveDirty = false;
     }
     async save () {
         if (!this.botLoaded) return;
         const serializedWorkspace = workspaceManager.saveWorkspaceToJSON();
-        this.bot.blocks = serializedWorkspace.blocks;
+        this.bot.data = serializedWorkspace;
         if (this.loadedFromId) {
             const response = await fetch(`${BACKEND_URL}/applications/${this.bot.id}`, {
                 method: 'PATCH',
-                body: JSON.stringify(serializedWorkspace),
+                body: JSON.stringify({ data: serializedWorkspace }),
                 headers: {
                     'Content-Type': 'application/json',
                     'x-session-token': AccountStore.session.token
                 }
             });
             if (!response.ok) {
-                throw new Error('Failed to update blocks');
+                throw new Error('Failed to update data');
             }
         } else {
             fileManager.saveFile(this.bot.name + '.botf', JSON.stringify(this.bot));

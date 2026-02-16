@@ -1,7 +1,34 @@
 import * as Blockly from 'blockly';
-import { DuplicateOnDrag } from '../patches.js';
+import { DuplicateOnDrag } from '../duplicate-on-drag.js';
 
-const categoryColor = "#e59e19";
+const categoryColor = "#ffbf00";
+
+Blockly.Blocks['events_whenBroadcastRecieved'] = {
+    init: function () {
+        this.setColour(categoryColor);
+        this.appendDummyInput()
+            .appendField('when')
+            .appendField(new Blockly.FieldVariable(
+                'message1', null,  ['Broadcast'], 'Broadcast'
+            ), 'BROADCAST')
+            .appendField('is recieved');
+        this.setNextStatement(true);
+        this.hat = 'cap';
+    }
+}
+
+Blockly.Blocks['events_broadcast'] = {
+    init: function () {
+        this.setColour(categoryColor);
+        this.appendDummyInput()
+            .appendField('broadcast')
+            .appendField(new Blockly.FieldVariable(
+                'message1', null,  ['Broadcast'], 'Broadcast'
+            ), 'BROADCAST');
+        this.setPreviousStatement(true);
+        this.setNextStatement(true);
+    }
+}
 
 Blockly.Blocks['events_whenStarted'] = {
     init: function() {
@@ -63,23 +90,6 @@ Blockly.Blocks['events_member'] = {
     }
 }
 
-Blockly.Blocks['events_timeoutseconds'] = {
-    init: function() {
-        this.appendDummyInput().appendField('seconds');
-        this.setColour(categoryColor);
-        this.setOutput('String');
-
-        this.setMovable(true);
-        this.setDeletable(true);
-
-        setTimeout(() => {
-            if (this.setDragStrategy && this.isShadow()) {
-                this.setDragStrategy(new DuplicateOnDrag(this));
-            }
-        });
-    }
-}
-
 Blockly.Blocks['events_messageEvent'] = {
     init: function() {
         this.appendDummyInput()
@@ -116,25 +126,14 @@ Blockly.Blocks['events_messageReactionEvent'] = {
     }
 }
 
-Blockly.Blocks['events_messagePinEvent'] = {
+Blockly.Blocks['events_memberStatusEvent'] = {
     init: function() {
         this.appendDummyInput()
-            .appendField("when message")
+            .appendField('when member')
             .appendField(new Blockly.FieldDropdown([
-                ['pinned', 'PIN'],
-                ['unpinned', 'UNPIN']
+                ['joins', 'JOIN'],
+                ['leaves', 'LEAVE']
             ]), 'EVENT');
-        this.appendValueInput('MESSAGE').setCheck('String');
-        this.setColour(categoryColor);
-        this.setNextStatement(true);
-        this.setInputsInline(true);
-        this.hat = 'cap';
-    }
-}
-
-Blockly.Blocks['events_memberJoin'] = {
-    init: function() {
-        this.appendDummyInput().appendField('when member joins');
         this.appendValueInput('MEMBER').setCheck('String');
         this.setColour(categoryColor);
         this.setNextStatement(true);
@@ -159,31 +158,10 @@ Blockly.Blocks['events_memberBanEvent'] = {
     }
 }
 
-Blockly.Blocks['events_memberKick'] = {
-    init: function() {
-        this.appendDummyInput()
-            .appendField("when member kicked")
-        this.appendValueInput('MEMBER').setCheck('String');
-        this.setColour(categoryColor);
-        this.setNextStatement(true);
-        this.setInputsInline(true);
-        this.hat = 'cap';
-    }
-}
-
-Blockly.Blocks['events_memberTimeoutEvent'] = {
-    init: function() {
-        this.appendDummyInput()
-            .appendField("when member")
-            .appendField(new Blockly.FieldDropdown([
-                ['timed out', 'TIME'],
-                ['untimed out', 'UNTIME']
-            ]), 'EVENT');
-        this.appendValueInput('MEMBER').setCheck('String');
-        this.appendValueInput('TIME').setCheck('String');
-        this.setColour(categoryColor);
-        this.setNextStatement(true);
-        this.setInputsInline(true);
-        this.hat = 'cap';
-    }
+export default function registerEventToolbox (workspace) {
+    workspace.registerButtonCallback('ADD_GLOBAL_BROADCAST', () => {
+        const name = prompt('New broadcast name:')?.trim();
+        if (!name) return;
+        workspace.variableMap.createVariable(name, 'Broadcast');
+    });
 }

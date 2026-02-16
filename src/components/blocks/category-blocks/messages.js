@@ -2,57 +2,64 @@ import * as Blockly from 'blockly';
 
 const categoryColor = "#2d9528";
 
-Blockly.Blocks['messages_send_config'] = {
-    init: function () {
-        this.appendDummyInput()
-            .appendField('ephemeral')
-            .appendField(new Blockly.FieldCheckbox('FALSE'), 'EPHEMERAL');
-
-        this.setColour(categoryColor);
-    }
-};
-
-Blockly.Extensions.registerMutator('messages_send_config', {
-    saveExtraState: function () {
-        return {
-            ephemeral: this.ephemeral_
-        };
-    },
-    loadExtraState: function (state) {
-        this.ephemeral = state.ephemeral ?? false;
-    }
-}, null, []);
-
 Blockly.Blocks['messages_sendMessage'] = {
     init: function () {
-        this.addIcon(new Blockly.icons.MutatorIcon([], this));
-        this.appendDummyInput().appendField('send message in channel');
-        this.appendValueInput('CHANNEL').setCheck('String');
-        this.appendValueInput('CONTENT').setCheck('String').appendField('with content');
+        this.returns_ = 'FALSE';
+        this.appendValueInput('CHANNEL')
+            .setCheck('Channel')
+            .appendField('send message in channel');
+        this.appendValueInput('CONTENT')
+            .appendField('content:');
+        this.appendValueInput('ATTACHMENTS')
+            .setCheck('List')
+            .appendField('attachments:');
+        this.appendValueInput('EPHEMERAL')
+            .setCheck('Boolean')
+            .appendField('ephemeral:');
+        this.appendDummyInput()
+            .appendField('output message:')
+            .appendField(new Blockly.FieldCheckbox('FALSE', v => {this.returns_ = v; this.updateShape_();}), 'RETURNS');
+        
         this.setPreviousStatement(true);
         this.setNextStatement(true);
-        this.setInputsInline(true);
+        this.setInputsInline(false);
         this.setColour(categoryColor);
-        this.setOutput('Message');
-
-        this.ephemeral_ = false;
     },
-    compose: function (containerBlock) {
-        this.ephemeral_ = containerBlock.getFieldValue('EPHEMERAL') === 'TRUE';
-
+    mutationToDom: function () {
+        const container = document.createElement('mutation');
+        container.setAttribute('returns', this.returns_);
+        return container;
     },
-    decompose: function (workspace) {
-        const containerBlock = workspace.newBlock('messages_send_config');
-        containerBlock.initSvg();
-        containerBlock.setFieldValue(this.ephemeral_, 'EPHEMERAL');
-        return containerBlock;
+    domToMutation: function (xmlElement) {
+        this.returns_ = xmlElement.getAttribute('returns') || 'FALSE';
+        this.updateShape_();
+        this.getField('RETURNS')?.setValue(this.returns_);
     },
-    extensions: ['messages_send_config']
+    updateShape_: function () {
+        if (this.returns_ === 'TRUE') {
+            if (this.previousConnection && this.previousConnection.isConnected()) {
+                this.previousConnection.disconnect();
+            }
+            if (this.nextConnection && this.nextConnection.isConnected()) {
+                this.nextConnection.disconnect();
+            }
+            this.setPreviousStatement(false);
+            this.setNextStatement(false);
+            this.setOutput(true, 'Message');
+        } else {
+            if (this.outputConnection && this.outputConnection.isConnected()) {
+                this.outputConnection.disconnect();
+            }
+            this.setOutput(false);
+            this.setPreviousStatement(true);
+            this.setNextStatement(true);
+        }
+    }
 }
 
 Blockly.Blocks['messages_getAttribute'] = {
     init: function () {
-        this.appendDummyInput()
+        this.appendValueInput('MESSAGE').setCheck('Message')
             .appendField('get')
             .appendField(new Blockly.FieldDropdown([
                 ['content', 'CONTENT'],
@@ -62,10 +69,9 @@ Blockly.Blocks['messages_getAttribute'] = {
                 ['creation date', 'DATE']
             ]), 'ATTR')
             .appendField('from message');
-        this.appendValueInput('MESSAGE').setCheck('String');
         this.setInputsInline(true);
         this.setColour(categoryColor);
-        this.setOutput('String');
+        this.setOutput(true, 'String');
     }
 }
 
@@ -83,13 +89,13 @@ Blockly.Blocks['messages_delete'] = {
 
 Blockly.Blocks['messages_pin'] = {
     init: function () {
-        this.appendDummyInput()
+        this.appendValueInput('MESSAGE')
+            .setCheck('Message')
             .appendField(new Blockly.FieldDropdown([
                 ['pin', 'PIN'],
                 ['unpin', 'UNPIN']
             ]), 'ACTION')
-            .appendField('message to channel');
-        this.appendValueInput('MESSAGE').setCheck('Message');
+            .appendField('message');
         this.setNextStatement(true);
         this.setPreviousStatement(true);
         this.setInputsInline(true);

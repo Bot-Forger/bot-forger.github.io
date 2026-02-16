@@ -29,7 +29,7 @@ Blockly.Blocks['members_find'] = {
             .appendField(new Blockly.FieldDropdown([
                 ['username', 'USERNAME'],
                 ['user id', 'USERID']
-            ]))
+            ]), 'TYPE')
         this.setInputsInline(true);
         this.setOutput(true, 'Member');
         this.setColour(categoryColor);
@@ -66,17 +66,6 @@ Blockly.Blocks['members_isBot'] = {
     }
 }
 
-Blockly.Blocks['members_isInServer'] = {
-    init: function () {
-        this.appendValueInput('MEMBER').setCheck('Member').appendField('is member')
-        this.appendValueInput('SERVER').setCheck('Server').appendField('in server');
-        this.appendDummyInput().appendField("?");
-        this.setInputsInline(true);
-        this.setOutput(true, 'Boolean');
-        this.setColour(categoryColor);
-    }
-}
-
 Blockly.Blocks['members_ban'] = {
     init: function () {
         this.appendDummyInput()
@@ -84,8 +73,12 @@ Blockly.Blocks['members_ban'] = {
                 ['ban', 'BAN'],
                 ['unban', 'UNBAN']
             ]), 'TYPE');
-        this.appendValueInput('MEMBER').setCheck('Member').appendField('member');
-        this.appendValueInput('REASON').setCheck('String').appendField('with reason');
+        this.appendValueInput('MEMBER')
+            .setCheck('Member')
+            .appendField('member');
+        this.appendValueInput('REASON')
+            .setCheck('String')
+            .appendField('with reason');
         this.setInputsInline(true);
         this.setPreviousStatement(true);
         this.setNextStatement(true);
@@ -100,9 +93,15 @@ Blockly.Blocks['members_timeout'] = {
                 ['timeout', 'TIME'],
                 ['untimeout', 'UNTIME']
             ]), 'TYPE');
-        this.appendValueInput('MEMBER').setCheck('Member').appendField('member');
-        this.appendValueInput('SECONDS').setCheck('Number').appendField('for seconds')
-        this.appendValueInput('REASON').setCheck('String').appendField('with reason');
+        this.appendValueInput('MEMBER')
+            .setCheck('Member')
+            .appendField('member');
+        this.appendValueInput('SECONDS')
+            .setCheck('Number')
+            .appendField('for seconds')
+        this.appendValueInput('REASON')
+            .setCheck('String')
+            .appendField('with reason');
         this.setInputsInline(true);
         this.setPreviousStatement(true);
         this.setNextStatement(true);
@@ -112,8 +111,12 @@ Blockly.Blocks['members_timeout'] = {
 
 Blockly.Blocks['members_kick'] = {
     init: function () {
-        this.appendValueInput('MEMBER').setCheck('Member').appendField('kick member');
-        this.appendValueInput('REASON').setCheck('String').appendField('with reason');
+        this.appendValueInput('MEMBER')
+            .setCheck('Member')
+            .appendField('kick member');
+        this.appendValueInput('REASON')
+            .setCheck('String')
+            .appendField('with reason');
         this.setInputsInline(true);
         this.setPreviousStatement(true);
         this.setNextStatement(true);
@@ -121,15 +124,11 @@ Blockly.Blocks['members_kick'] = {
     }
 }
 
-Blockly.Blocks['members_isModerated'] = {
+Blockly.Blocks['members_isTimed'] = {
     init: function () {
         this.appendValueInput('MEMBER').setCheck('Member').appendField('is member');
         this.appendDummyInput()
-            .appendField(new Blockly.FieldDropdown([
-                ['timed out', 'TIMED'],
-                ['banned', 'BANNED']
-            ]), 'TYPE')
-            .appendField("?");
+            .appendField('timed out?');
         this.setInputsInline(true);
         this.setOutput(true, 'Boolean');
         this.setColour(categoryColor);

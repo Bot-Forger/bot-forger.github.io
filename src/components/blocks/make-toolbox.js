@@ -4,6 +4,9 @@ const numberShadow = (inputId, defaultValue) =>
 const stringShadow = (inputId, defaultValue) =>
   `<value name="${inputId}"><shadow type="string_shadow"><field name="TEXT">${defaultValue}</field></shadow></value>`;
 
+const booleanShadow = (inputId, defaultValue) =>
+  `<value name="${inputId}"><shadow type="logic_boolean"><field name="BOOL">${defaultValue.toString().toUpperCase()}</field></shadow></value>`;
+
 const blockShadow = (inputId, blockId) =>
   `<value name="${inputId}"><shadow type="${blockId}"></shadow></value>`;
 
@@ -11,9 +14,13 @@ const sep = (gap = 50) => `<sep gap="${gap}"></sep>`;
 
 const categoryColors = {
   Tests: "#14e3a2",
+  Events: "#ffbf00",
+  Operators: "#59c059",
+  Controls: "#ffab19",
   Text: "#58a69c",
+  Variables: "#ff8c1a",
   Lists: '#e53935',
-  Events: "#e59e19",
+  Functions: "#ff6680",
   Messages: "#2d9528",
   Members: "#437bc5",
   Emojis: "#e0c138",
@@ -25,57 +32,12 @@ const categoryColors = {
 
 export default `
 <xml xmlns="https://developers.google.com/blockly/xml">
-  <category name="Text" colour="${categoryColors.Text}">
-    <block type="text_asText"></block>
-    <block type="text_join">
-      ${stringShadow("INPUT1", "")}
-      ${stringShadow("INPUT2", "")}
-    </block>
-    <block type="text_length">
-      ${stringShadow("INPUT", "")}
-    </block>
-    <block type="text_contains">
-      ${stringShadow("INPUT", "")}
-      ${stringShadow("SUB", "")}
-    </block>
-    <block type="text_startsEnds">
-      ${stringShadow("INPUT", "")}
-      ${stringShadow("SUB", "")}
-    </block>
-    <block type="text_lettersFrom">
-      ${numberShadow("START", 1)}
-      ${numberShadow("END", 3)}
-      ${stringShadow("input", "")}
-    </block>
-    <block type="text_replace">
-      ${stringShadow("FROM", "")}
-      ${stringShadow("TO", "")}
-      ${stringShadow("INPUT", "")}
-    </block>
-    <block type="text_charAt">
-      ${numberShadow("INDEX", 1)}
-      ${stringShadow("INPUT", "")}
-    </block>
-    <block type="text_indexOf">
-      ${stringShadow("SUB", "")}
-      ${stringShadow("INPUT", "")}
-    </block>
-    <block type="text_toCase">
-      ${stringShadow("INPUT", "")}
-    </block>
-    ${sep()}
-    <block type="text_logConsole">
-      ${stringShadow("INPUT", "")}
-    </block>
-  </category>
-  <category name="Lists" colour="${categoryColors.Lists}">
-    <block type="lists_forEach">
-      ${blockShadow('ITEM', 'lists_forEach_item')}
-    </block>
-  </category>
-  ${sep()}
   <category name="Events" colour=${categoryColors.Events}>
     <block type="events_whenStarted"></block>
+    ${sep()}
+    <button text="Create broadcast" callbackKey="ADD_GLOBAL_BROADCAST"></button>
+    <block type="events_whenBroadcastRecieved"></block>
+    <block type="events_broadcast"></block>
     ${sep()}
     <block type="events_messageEvent">
       ${blockShadow('MESSAGE', 'events_message')}
@@ -84,27 +46,188 @@ export default `
       ${blockShadow('MESSAGE', 'events_message')}
       ${blockShadow('REACTION', 'events_reaction')}
     </block>
-    <block type="events_messagePinEvent">
-      ${blockShadow('MESSAGE', 'events_message')}
-    </block>
     ${sep()}
-    <block type="events_memberJoin">
+    <block type="events_memberStatusEvent">
       ${blockShadow('MEMBER', 'events_member')}
     </block>
     <block type="events_memberBanEvent">
       ${blockShadow('MEMBER', 'events_member')}
     </block>
-    <block type="events_memberKick">
-      ${blockShadow('MEMBER', 'events_member')}
+  </category>
+  <category name="Control" colour="${categoryColors.Controls}">
+    <block type="controls_wait">
+      ${stringShadow('SECONDS', 10)}
     </block>
-    <block type="events_memberTimeoutEvent">
-      ${blockShadow('MEMBER', 'events_member')}
-      ${blockShadow('TIME', 'events_timeoutseconds')}
+    ${sep()}
+    <block type="controls_repeat">
+      ${numberShadow('REPEAT', 10)}
     </block>
+    <block type="controls_forever"></block>
+    ${sep()}
+    <block type="controls_if"></block>
+    <block type="controls_if_else"></block>
+    <block type="controls_inline_if_else">
+      ${stringShadow('THEN', 'apple')}
+      ${stringShadow('ELSE', 'banana')}
+    </block>
+    <block type="controls_waitUntil"></block>
+    <block type="controls_while"></block>
+    <block type="controls_try">
+      ${blockShadow('ERROR', 'controls_try_error')}
+    </block>
+    <block type="controls_error">
+      ${stringShadow('MESSAGE', 'Hello!')}
+    </block>
+    <block type="controls_stop"></block>
+  </category>
+  <category name="Operators" colour="${categoryColors.Operators}">
+    <block type="operators_arithmetic">
+      ${numberShadow('NUM1', 0)}
+      ${numberShadow('NUM2', 0)}
+    </block>
+    <block type="operators_compare"></block>
+    <block type="operators_operation"></block>
+    <block type="operators_not"></block>
+    <block type="operators_boolean"></block>
+    ${sep()}
+    <block type="operators_random">
+      ${numberShadow('MIN', 1)}
+      ${numberShadow('MAX', 10)}
+    </block>
+    <block type="operators_isEvenOrOdd">
+      ${numberShadow('NUM', 5)}
+    </block>
+    <block type="operators_round">
+      ${numberShadow('NUM', 0)}
+    </block>
+    <block type="operators_mod">
+      ${numberShadow('NUM1', 0)}
+      ${numberShadow('NUM2', 0)}
+    </block>
+    <block type="operators_of">
+      ${numberShadow('NUM', 0)}
+    </block>
+    <block type="operators_null"></block>
+    <block type="operators_pi"></block>
+  </category>
+  <category name="Text" colour="${categoryColors.Text}">
+    <block type="text_asText"></block>
+    <block type="text_join">
+      <mutation items="2"></mutation>
+    </block>
+    <block type="text_length">
+      ${stringShadow("TEXT", "")}
+    </block>
+    <block type="text_contains">
+      ${stringShadow("TEXT", "")}
+      ${stringShadow("SUB", "")}
+    </block>
+    <block type="text_startsEnds">
+      ${stringShadow("TEXT", "")}
+      ${stringShadow("SUB", "")}
+    </block>
+    <block type="text_lettersFrom">
+      ${numberShadow("START", 1)}
+      ${numberShadow("END", 3)}
+      ${stringShadow("TEXT", "")}
+    </block>
+    <block type="text_replace">
+      ${stringShadow("FROM", "")}
+      ${stringShadow("TO", "")}
+      ${stringShadow("TEXT", "")}
+    </block>
+    <block type="text_charAt">
+      ${numberShadow("INDEX", 1)}
+      ${stringShadow("TEXT", "")}
+    </block>
+    <block type="text_indexOf">
+      ${stringShadow("SUB", "")}
+      ${stringShadow("TEXT", "")}
+    </block>
+    <block type="text_toCase">
+      ${stringShadow("TEXT", "")}
+    </block>
+    <block type="text_newLine"></block>
+  </category>
+  <category name="Variables" colour="${categoryColors.Variables}" custom="GLOBAL_VARIABLES"></category>
+  <category name="Dictionaries" colour="${categoryColors.Lists}">
+    <block type="dictionaries_create">
+        <mutation items="1"></mutation>
+    </block>
+    <block type="dictionaries_empty"></block>
+    ${sep()}
+    <block type="dictionaries_get">
+      ${stringShadow('KEY', 'apple')}
+    </block>
+    <block type="dictionaries_set">
+      ${stringShadow('KEY', 'apple')}
+      ${stringShadow('VALUE', 'banana')}
+    </block>
+    <block type="dictionaries_delete">
+      ${stringShadow('KEY', 'apple')}
+    </block>
+    <block type="dictionaries_values"></block>
+    <block type="dictionaries_length"></block>
+    <block type="dictionaries_isEmpty"></block>
+  </category>
+  <category name="Lists" colour="${categoryColors.Lists}">
+    <block type="lists_create">
+        <mutation items="2"></mutation>
+    </block>
+    <block type="lists_repeat">
+      ${stringShadow('VALUE', 'Hello')}
+      ${numberShadow('REPEAT', 10)}
+    </block>
+    <block type="lists_empty"></block>
+    ${sep()}
+    <block type="lists_get">
+      ${numberShadow('ITEM', 1)}
+    </block>
+    <block type="lists_add">
+      ${stringShadow('ITEM', 'apple')}
+    </block>
+    <block type="lists_set">
+      ${numberShadow('ITEM', 1)}
+      ${stringShadow('VALUE', 'Hello')}
+    </block>
+    <block type="lists_delete">
+      ${numberShadow('ITEM', 1)}
+    </block>
+    <block type="lists_length"></block>
+    <block type="lists_isEmpty"></block>
+    <block type="lists_join">
+      ${stringShadow('DELIMITER', ',')}
+    </block>
+    ${sep()}
+    <block type="lists_forEach">
+      ${blockShadow('ITEM', 'lists_forEach_item')}
+      ${blockShadow('INDEX', 'lists_forEach_index')}
+    </block>
+    <block type="lists_filter">
+      ${blockShadow('ITEM', 'lists_filter_item')}
+      ${blockShadow('INDEX', 'lists_filter_index')}
+    </block>
+    <block type="lists_map">
+      ${blockShadow('ITEM', 'lists_map_item')}
+      ${blockShadow('INDEX', 'lists_map_index')}
+    </block>
+  </category>
+  <category name="Functions" colour="${categoryColors.Functions}" custom="FUNCTIONS_CATEGORY"></category>
+  ${sep()}
+  <category name="Servers">
+    <block type="servers_joined"></block>
+    <block type="servers_find">
+      ${stringShadow('SEARCH', '')}
+    </block>
+    <block type="servers_getAttribute"></block>
+    <block type="servers_isVerified"></block>
+    ${sep()}
+    <block type="servers_leave"></block>
   </category>
   <category name="Messages" colour="${categoryColors.Messages}">
     <block type="messages_sendMessage">
       ${stringShadow('CONTENT', 'Hello world!')}
+      ${booleanShadow('EPHEMERAL', false)}
     </block>
     <block type="messages_getAttribute"></block>
     <block type="messages_delete"></block>
@@ -128,7 +251,6 @@ export default `
     </block>
     <block type="members_getAttribute"></block>
     <block type="members_isBot"></block>
-    <block type="members_isInServer"></block>
     ${sep()}
     <block type="members_ban">
       ${stringShadow('REASON', '')}
@@ -140,7 +262,7 @@ export default `
     <block type="members_kick">
       ${stringShadow('REASON', '')}
     </block>
-    <block type="members_isModerated"></block>
+    <block type="members_isTimed"></block>
   </category>
   <category name="Emojis" colour="${categoryColors.Emojis}">
     <block type="emojis_all"></block>
@@ -165,7 +287,6 @@ export default `
       ${stringShadow('SEARCH', 'cat')}
     </block>
     <block type="stickers_getAttribute"></block>
-    <block type="stickers_isAnimated"></block>
     ${sep()}
     <block type="stickers_create">
       ${stringShadow('NAME', 'cat')}
@@ -178,7 +299,6 @@ export default `
   </category>
   <category name="Invites" colour="${categoryColors.Invites}">
     <block type="invites_all"></block>
-    <block type="invites_allChannel"></block>
     <block type="invites_getAttribute"></block>
     <block type="invites_fetch">
       ${stringShadow('URL', '')}
@@ -188,6 +308,7 @@ export default `
       ${numberShadow('USES', 10)}
     </block>
     <block type="invites_delete"></block>
+    <block type="invites_toggle"></block>
   </category>
   <category name="Webhooks" colour="${categoryColors.Webhooks}">
     <block type="webhooks_create">
@@ -201,7 +322,7 @@ export default `
     </block>
     ${sep()}
     <block type="webhooks_send">
-      ${stringShadow('MESSAGE', 'Hello!')}
+      ${stringShadow('CONTENT', 'Hello!')}
     </block>
     <block type="webhooks_edit">
       ${stringShadow('VALUE', '')}
@@ -214,6 +335,7 @@ export default `
       ${stringShadow('SEARCH', 'general')}
     </block>
     <block type="channels_getAttribute"></block>
+    <block type="channels_canSend"></block>
     ${sep()}
     <block type="channels_create">
       ${stringShadow('CATEGORY', 'Text Channels')}

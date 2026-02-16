@@ -9,15 +9,47 @@ Blockly.Blocks['webhooks_create'] = {
             .appendField('create webhook in channel');
         this.appendValueInput('NAME')
             .setCheck('String')
-            .appendField('with name');
+            .appendField('name:');
         this.appendValueInput('AVATAR')
             .setCheck('String')
-            .appendField('and avatar URL');
+            .appendField('avatar URL:');
+        this.appendDummyInput()
+            .appendField('output webhook:')
+            .appendField(new Blockly.FieldCheckbox('FALSE', v => {this.returns_ = v; this.updateShape_();}), 'RETURNS');
         this.setPreviousStatement(true);
         this.setNextStatement(true);
-        this.setOutput(true, 'Webhook');
         this.setColour(categoryColor);
-        this.setInputsInline(true);
+        this.setInputsInline(false);
+    },
+    mutationToDom: function () {
+        const container = document.createElement('mutation');
+        container.setAttribute('returns', this.returns_);
+        return container;
+    },
+    domToMutation: function (xmlElement) {
+        this.returns_ = xmlElement.getAttribute('returns') || 'FALSE';
+        this.updateShape_();
+        this.getField('RETURNS')?.setValue(this.returns_);
+    },
+    updateShape_: function () {
+        if (this.returns_ === 'TRUE') {
+            if (this.previousConnection && this.previousConnection.isConnected()) {
+                this.previousConnection.disconnect();
+            }
+            if (this.nextConnection && this.nextConnection.isConnected()) {
+                this.nextConnection.disconnect();
+            }
+            this.setPreviousStatement(false);
+            this.setNextStatement(false);
+            this.setOutput(true, 'Webhook');
+        } else {
+            if (this.outputConnection && this.outputConnection.isConnected()) {
+                this.outputConnection.disconnect();
+            }
+            this.setOutput(false);
+            this.setPreviousStatement(true);
+            this.setNextStatement(true);
+        }
     }
 }
 
@@ -58,7 +90,7 @@ Blockly.Blocks['webhooks_send'] = {
         this.appendValueInput('WEBHOOK')
             .setCheck('Webhook')
             .appendField('send message with webhook');
-        this.appendValueInput('MESSAGE')
+        this.appendValueInput('CONTENT')
             .setCheck('String')
             .appendField('with content');
         this.setPreviousStatement(true);

@@ -15,5 +15,13 @@
 }
 
 .blocklyHtmlInput {
-  color-scheme: light;
+  color-scheme: light
+}
+
+.blocklyFlyoutButton {
+    cursor: pointer
+}
+
+.blocklyFlyoutLabelText {
+    font-size: 1.25rem !important;
 }
