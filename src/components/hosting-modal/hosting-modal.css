@@ -1,8 +1,8 @@
-.control-panel > p {
+.hosting-modal > p {
     margin-bottom: 0.25rem
 }
 
-.control-panel > i, .control-panel > .bot-status, .control-panel > .bot-uptime {
+.hosting-modal > i, .hosting-modal > .bot-status, .hosting-modal > .bot-uptime {
     margin-top: 0.4rem;
     text-align: center;
 }

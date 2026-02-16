@@ -15,7 +15,7 @@ import BotStore from '../lib/stores/bot.js';
 import SecretsModal from '../components/secrets-modal/secrets-modal.jsx';
 import BotModal from '../components/bot-modal/bot-modal.jsx';
 import CommandsModal from '../components/commands-modal/commands-modal.jsx';
-import ControlPanel from '../components/control-panel/control-panel.jsx';
+import HostingModal from '../components/hosting-modal/hosting-modal.jsx';
 
 export default function Editor () {
     const [modalOpen, setModalOpen] = useState(null);
@@ -63,7 +63,7 @@ export default function Editor () {
                     <Button disabled={!BotStore.botLoaded} onClick={() => setModalOpen('botSettings')}>Bot Settings</Button>
                 </DropdownMenu>
                 {BotStore.botLoaded && BotStore.loadedFromId &&
-                    <Button onClick={() => setModalOpen('controlPanel')}>Control Panel</Button>
+                    <Button onClick={() => setModalOpen('hosting')}>Hosting</Button>
                 }
                 <Button onClick={() => window.open('https://scratch.mit.edu/users/lordcat__/#comments', '_blank')}>Feedback</Button>
             </MenuBar>
@@ -80,8 +80,8 @@ export default function Editor () {
                 isOpen={modalOpen === 'secrets'}
                 onClose={handleModalClose}
             />
-            <ControlPanel
-                isOpen={modalOpen === 'controlPanel'}
+            <HostingModal
+                isOpen={modalOpen === 'hosting'}
                 onClose={handleModalClose}
             />
         </div>

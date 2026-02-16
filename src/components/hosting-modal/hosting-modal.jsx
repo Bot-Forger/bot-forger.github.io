@@ -5,7 +5,7 @@ import Console from '../console/console';
 
 import BotStore from '../../lib/stores/bot';
 
-import './control-panel.css';
+import './hosting-modal.css';
 
 const RUNNER_URL = import.meta.env.VITE_RUNNER_URL;
 
@@ -107,9 +107,9 @@ function ControlPanel (props) {
         <Modal
             isOpen={props.isOpen}
             onClose={props.onClose}
-            name="Control Panel"
-            height='30rem'
-            className='control-panel'
+            name="Hosting"
+            height='33rem'
+            className='hosting-modal'
             isLoading={!connected && canStart}
             style={{
                 display: 'flex',
