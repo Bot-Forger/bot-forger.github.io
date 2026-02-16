@@ -1,6 +1,6 @@
 import * as Blockly from 'blockly';
 
-const categoryColor = '#e53935';
+const categoryColor = '#EC4E2E';
 
 Blockly.Blocks['dictionaries_create'] = {
     init: function () {

@@ -1,6 +1,6 @@
 import * as Blockly from 'blockly';
 
-const categoryColor = "#e0c138";
+const categoryColor = "#5865f2";
 
 Blockly.Blocks['servers_joined'] = {
     init: function () {

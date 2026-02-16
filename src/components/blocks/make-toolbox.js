@@ -19,10 +19,12 @@ const categoryColors = {
   Controls: "#ffab19",
   Text: "#58a69c",
   Variables: "#ff8c1a",
-  Lists: '#e53935',
+  Dictionaries: "#EC4E2E",
+  Lists: "#e53935",
   Functions: "#ff6680",
-  Messages: "#2d9528",
+  Servers: "#5865F2",
   Members: "#437bc5",
+  Messages: "#2d9528",
   Emojis: "#e0c138",
   Stickers: "#c7b04b",
   Invites: "#9e31b9",
@@ -150,7 +152,7 @@ export default `
     <block type="text_newLine"></block>
   </category>
   <category name="Variables" colour="${categoryColors.Variables}" custom="GLOBAL_VARIABLES"></category>
-  <category name="Dictionaries" colour="${categoryColors.Lists}">
+  <category name="Dictionaries" colour="${categoryColors.Dictionaries}">
     <block type="dictionaries_create">
         <mutation items="1"></mutation>
     </block>
@@ -214,7 +216,7 @@ export default `
   </category>
   <category name="Functions" colour="${categoryColors.Functions}" custom="FUNCTIONS_CATEGORY"></category>
   ${sep()}
-  <category name="Servers">
+  <category name="Servers" colour="${categoryColors.Servers}">
     <block type="servers_joined"></block>
     <block type="servers_find">
       ${stringShadow('SEARCH', '')}
@@ -223,26 +225,6 @@ export default `
     <block type="servers_isVerified"></block>
     ${sep()}
     <block type="servers_leave"></block>
-  </category>
-  <category name="Messages" colour="${categoryColors.Messages}">
-    <block type="messages_sendMessage">
-      ${stringShadow('CONTENT', 'Hello world!')}
-      ${booleanShadow('EPHEMERAL', false)}
-    </block>
-    <block type="messages_getAttribute"></block>
-    <block type="messages_delete"></block>
-    ${sep()}
-    <block type="messages_pin"></block>
-    <block type="messages_isPinned"></block>
-    ${sep()}
-    <block type="messages_react">
-      ${stringShadow('REACTION', '🔥')}
-    </block>
-    <block type="messages_removeAllReactions"></block>
-    <block type="messages_reactions"></block>
-    <block type="messages_hasReaction">
-      ${stringShadow('REACTION', '🔥')}
-    </block>
   </category>
   <category name="Members" colour="${categoryColors.Members}">
     <block type="members_all"></block>
@@ -263,6 +245,26 @@ export default `
       ${stringShadow('REASON', '')}
     </block>
     <block type="members_isTimed"></block>
+  </category>
+  <category name="Messages" colour="${categoryColors.Messages}">
+    <block type="messages_sendMessage">
+      ${stringShadow('CONTENT', 'Hello world!')}
+      ${booleanShadow('EPHEMERAL', false)}
+    </block>
+    <block type="messages_getAttribute"></block>
+    <block type="messages_delete"></block>
+    ${sep()}
+    <block type="messages_pin"></block>
+    <block type="messages_isPinned"></block>
+    ${sep()}
+    <block type="messages_react">
+      ${stringShadow('REACTION', '🔥')}
+    </block>
+    <block type="messages_removeAllReactions"></block>
+    <block type="messages_reactions"></block>
+    <block type="messages_hasReaction">
+      ${stringShadow('REACTION', '🔥')}
+    </block>
   </category>
   <category name="Emojis" colour="${categoryColors.Emojis}">
     <block type="emojis_all"></block>
