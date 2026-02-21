@@ -2,34 +2,19 @@ import { useEffect, useRef } from 'react';
 import * as Blockly from 'blockly/core';
 import DarkTheme from '@blockly/theme-dark';
 
-import toolboxXML from './make-toolbox.js';
+import toolboxXML from '../../lib/make-toolbox.js';
 import WorkspaceManager from '../../lib/workspace-manager';
 import ThemeStore from '../../lib/stores/theme';
-import renderer from './renderer.js';
+import renderer from '../../lib/renderer.js';
 
-import './duplicate-on-drag.js';
+import '../../lib/duplicate-on-drag.js';
 import './blocks.css';
 
+import.meta.glob('../../lib/blocks/*.js', { eager: true });
 
-import './category-blocks/controls.js';
-import './category-blocks/operators.js';
-import './category-blocks/tests.js';
-import './category-blocks/text.js';
-import './category-blocks/dictionaries.js';
-import './category-blocks/lists.js';
-import './category-blocks/servers.js';
-import './category-blocks/messages.js';
-import './category-blocks/members.js';
-import './category-blocks/emojis.js';
-import './category-blocks/stickers.js';
-import './category-blocks/invites.js';
-import './category-blocks/webhooks.js';
-import './category-blocks/channels.js';
-import './category-blocks/shadows.js';
-
-import registerVariableToolbox from './category-blocks/variables.js';
-import registerEventToolbox from './category-blocks/events.js';
-import registerFunctionsToolbox from './category-blocks/functions.js';
+import registerVariableToolbox from '../../lib/blocks/variables.js';
+import registerEventToolbox from '../../lib/blocks/events.js';
+import registerFunctionsToolbox from '../../lib/blocks/functions.js';
 
 function Blocks () {
     const blocklyDiv = useRef(null);

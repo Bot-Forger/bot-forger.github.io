@@ -1,5 +1,5 @@
-//Renderer by @jwklong
-//https://discord.com/users/567307285324496897
+// Renderer by @jwklong
+// https://github.com/jwklong
 
 import * as Blockly from "blockly/core"
 const svgPaths = Blockly.utils.svgPaths
@@ -7,22 +7,20 @@ const svgPaths = Blockly.utils.svgPaths
 
 class CustomConstantProvider extends Blockly.zelos.ConstantProvider {
     constructor() {
-        super()
+        super();
 
-        this.NOTCH_WIDTH = 6 * this.GRID_UNIT
-        this.NOTCH_HEIGHT = 1.5 * this.GRID_UNIT
+        this.NOTCH_WIDTH = 6 * this.GRID_UNIT;
+        this.NOTCH_HEIGHT = 1.5 * this.GRID_UNIT;
     }
 
     init() {
-        super.init()
-
-        //this.ADD_START_HATS = true
+        super.init();
         
-        this.PLUS = this.makePlus()
+        this.PLUS = this.makePlus();
     }
 
     makePlus() {
-        const radius = this.CORNER_RADIUS
+        const radius = this.CORNER_RADIUS;
 
         function makeMainPath(
             blockHeight, up, right) {
@@ -60,7 +58,7 @@ class CustomConstantProvider extends Blockly.zelos.ConstantProvider {
                     svgPaths.point(
                         (up ? 1 : -1) * radius, (up ? -1 : 1) * radius)
                     )
-            )
+            );
         }
 
         return {
@@ -109,7 +107,7 @@ class CustomConstantProvider extends Blockly.zelos.ConstantProvider {
                 return this.SQUARED;
             }
         }
-        return super.shapeFor(connection)
+        return super.shapeFor(connection);
     }
 }
 
@@ -127,7 +125,7 @@ class Renderer extends Blockly.zelos.Renderer {
     }
 
     makePathObject(root, style) {
-        return new PathObject(root, style, this.getConstants())
+        return new PathObject(root, style, this.getConstants());
     }
 };
 

@@ -1,6 +1,6 @@
 import * as Blockly from 'blockly/core';
 
-export class DuplicateOnDrag {
+export default class DuplicateOnDrag {
   constructor(block) {
     this.block = block;
   }

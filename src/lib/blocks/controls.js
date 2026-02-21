@@ -1,5 +1,5 @@
 import * as Blockly from 'blockly';
-import { DuplicateOnDrag } from '../duplicate-on-drag.js';
+import DuplicateOnDrag from '../duplicate-on-drag.js';
 
 const categoryColor = '#ffab19';
 
